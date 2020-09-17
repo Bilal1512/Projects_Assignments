@@ -30,11 +30,16 @@ def power(num1, num2): #num1 ^ num2
     		power*=num1
     return power
 	
-# # Python 3 program to print GP.  geometric Progression
-# #You cant use the inbuilt python function. Write your own function
-# def printGP(a, r, n): 
-# 	gp=[]
-# 	return gp 
+# Python 3 program to print GP.  geometric Progression
+#You cant use the inbuilt python function. Write your own function
+def printGP(a, r, n):
+    temp=a
+    gp=[]
+    for i in range(n):
+            gp.append(temp)
+            temp*=r
+    return gp
+    		
 
 # # Python 3 program to print AP.  arithmetic Progression
 # #You cant use the inbuilt python function. Write your own function
