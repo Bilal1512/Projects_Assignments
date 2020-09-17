@@ -1,6 +1,6 @@
 import tutorial01 as A1
 
-actual_answers = [9, 12, 80, 5, [2, 6, 10, 14, 18]]
+actual_answers = [9, 12, 80, 5, [.5, .25]]
 student_answers = []
 
 test_case_1 = A1.add(4, 5)
@@ -19,14 +19,14 @@ student_answers.append(test_case_4)
 # Driver code 
 
 a = 2 # starting number 
-d = 4 # Common ratio 
-n = 5 # N th term to be find 
+d = -2 # Common ratio 
+n = 2 # N th term to be find 
 
-ap = A1.printAP(a, d, n) 
-ap = list(ap) 
-student_answers.append(ap)
+hp = A1.printHP(a, d, n) 
+hp = list(hp) 
+student_answers.append(hp)
 
-print(ap)
+print(hp)
 print(actual_answers)
 print(student_answers)
 

@@ -51,8 +51,14 @@ def printAP(a, d, n):
         temp+=d
     return ap
 
-# # Python 3 program to print HP.   Harmonic Progression
-# #You cant use the inbuilt python function. Write your own function
-# def printHP(a, d, n): 
-# 	hp=[]
-# 	return hp
+# Python 3 program to print HP.   Harmonic Progression
+#You cant use the inbuilt python function. Write your own function
+def printHP(a, d, n): 
+    temp=a
+    hp=[]
+    for i in range(n):
+        if temp is 0:
+            return [0]
+        hp.append(1.000/temp)
+        temp+=d
+    return hp
