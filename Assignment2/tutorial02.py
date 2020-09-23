@@ -20,12 +20,15 @@ def sorting(first_list):
                 sorted_list[i],sorted_list[j]=sorted_list[j],sorted_list[i]
     return sorted_list
 
-
-# # Function to compute median. You cant use Python functions
-# def median(first_list):
-#     # median Logic
-#     return median_value
-
+def median(first_list):
+    if len(first_list) is 0:
+        return 0
+    first_list=sorting(first_list)
+    if len(first_list)%2 is 1:
+        median_value=first_list[int(len(first_list)/2)]
+    else:
+        median_value=(first_list[int(len(first_list)/2)-1]+first_list[int(len(first_list)/2)])/2
+    return round(median_value,3)
 
 # # Function to compute Standard deviation. You cant use Python functions
 # def standard_deviation(first_list):
