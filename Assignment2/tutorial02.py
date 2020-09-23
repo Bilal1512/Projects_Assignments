@@ -1,4 +1,10 @@
 # All decimal 3 places
+# Function to compute sum. You cant use Python functions
+def summation(first_list):
+    summation_value=0.0
+    for i in range(len(first_list)):
+        summation_value+=first_list[i]
+    return round(summation_value,3)
 
 # # Function to compute mean
 # def mean(first_list):
@@ -69,8 +75,3 @@
 #     # Kurtosis Logic
 #     return kurtosis_value
 
-
-# # Function to compute sum. You cant use Python functions
-# def summation(first_list):
-#     # sum Logic
-#     return summation_value
