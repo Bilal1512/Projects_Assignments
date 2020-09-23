@@ -104,14 +104,10 @@ def variance(first_list):
     variance_value=temp/len(first_list)
     return round(variance_value,3)
 
-# # Function to compute Standard deviation. You cant use Python functions
-# def standard_deviation(first_list):
-#     # Standard deviation Logic
-#     return standard_deviation_value
-
-
-
-
+# Function to compute Standard deviation. You cant use Python functions
+def standard_deviation(first_list):
+    standard_deviation_value=math.sqrt(variance(first_list))
+    return round(standard_deviation_value,3)
 
 
 # # Function to compute Skewness. You cant use Python functions
