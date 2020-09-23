@@ -82,6 +82,16 @@ def pcc(first_list, second_list):
     return round(pcc_value,3)
 
 
+# Function to compute mae. You cant use Python functions
+def mae(first_list, second_list):
+    if len(first_list) is 0 or len(first_list)!=len(second_list):
+        return 0
+    temp=0
+    for i in range(len(first_list)):
+        temp+=abs(first_list[i]-second_list[i])
+    mae_value=temp/len(first_list)
+    return round(mae_value,3)
+
 # # Function to compute Standard deviation. You cant use Python functions
 # def standard_deviation(first_list):
 #     # Standard deviation Logic
@@ -93,12 +103,6 @@ def pcc(first_list, second_list):
 #     # variance Logic
 #     return variance_value
 
-
-
-# # Function to compute mae. You cant use Python functions
-# def mae(first_list, second_list):
-#     # mae Logic
-#     return mae_value
 
 
 
