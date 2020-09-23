@@ -11,13 +11,12 @@ def sum_of_list(first_list):
         a+=first_list[i]
     return a
 
-# def mean(first_list):
-#     if len(first_list) is 0:
-#         return 0
-#     mean_value= sum_of_list(first_list)/len(first_list)
-#     mean_value="{0:.3f}".format(mean_value)
-#     return mean_value
-# print(mean([1,2,3,4]))
+def mean(first_list):
+    if len(first_list) is 0:
+        return 0
+    mean_value = sum_of_list(first_list)/len(first_list)
+    return round(mean_value,3)
+
 # # Function to compute median. You cant use Python functions
 # def median(first_list):
 #     # median Logic
