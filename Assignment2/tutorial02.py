@@ -6,11 +6,11 @@ def summation(first_list):
         summation_value+=first_list[i]
     return round(summation_value,3)
 
-# # Function to compute mean
-# def mean(first_list):
-#     # mean Logic 
-#     return mean_value
-
+def mean(first_list):
+    if len(first_list) is 0:
+        return 0
+    mean_value = summation(first_list)/len(first_list)
+    return round(mean_value,3)
 
 # # Function to compute median. You cant use Python functions
 # def median(first_list):
