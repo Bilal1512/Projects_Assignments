@@ -30,6 +30,16 @@ def median(first_list):
         median_value=(first_list[int(len(first_list)/2)-1]+first_list[int(len(first_list)/2)])/2
     return round(median_value,3)
 
+# Function to compute mse. You cant use Python functions
+def mse(first_list, second_list):
+    if len(first_list) is 0 or len(first_list)!=len(second_list):
+        return 0
+    temp=0.0
+    for i in range(len(first_list)):
+        temp+=(first_list[i]-second_list[i])*(first_list[i]-second_list[i])
+    mse_value=temp/len(first_list)
+    return round(mse_value,3)
+
 # # Function to compute Standard deviation. You cant use Python functions
 # def standard_deviation(first_list):
 #     # Standard deviation Logic
@@ -46,12 +56,6 @@ def median(first_list):
 # def rmse(first_list, second_list):
 #     # RMSE Logic
 #     return rmse_value
-
-
-# # Function to compute mse. You cant use Python functions
-# def mse(first_list, second_list):
-#     # mse Logic
-#     return mse_value
 
 
 # # Function to compute mae. You cant use Python functions
