@@ -92,16 +92,24 @@ def mae(first_list, second_list):
     mae_value=temp/len(first_list)
     return round(mae_value,3)
 
+
+# Function to compute variance. You cant use Python functions
+def variance(first_list):
+    if len(first_list) is 0 :
+            return 0
+    mean_value=mean(first_list)
+    temp=0
+    for i in range(len(first_list)):
+        temp+=(first_list[i]-mean_value)*(first_list[i]-mean_value)
+    variance_value=temp/len(first_list)
+    return round(variance_value,3)
+
 # # Function to compute Standard deviation. You cant use Python functions
 # def standard_deviation(first_list):
 #     # Standard deviation Logic
 #     return standard_deviation_value
 
 
-# # Function to compute variance. You cant use Python functions
-# def variance(first_list):
-#     # variance Logic
-#     return variance_value
 
 
 
