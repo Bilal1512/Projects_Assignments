@@ -122,8 +122,14 @@ def skewness(first_list):
     skewness_value=temp/len(first_list)
     return round(skewness_value,3)
 
-# # Function to compute Kurtosis. You cant use Python functions
-# def kurtosis(first_list):
-#     # Kurtosis Logic
-#     return kurtosis_value
-
+# Function to compute Kurtosis. You cant use Python functions
+def kurtosis(first_list):
+    standard_deviation_value=standard_deviation(first_list)
+    if len(first_list) is 0 or standard_deviation_value is 0:
+            return 0
+    mean_value=mean(first_list)
+    temp=0
+    for i in range(len(first_list)):
+        temp+=((first_list[i]-mean_value)*(first_list[i]-mean_value)*(first_list[i]-mean_value)*(first_list[i]-mean_value))/(standard_deviation_value*standard_deviation_value*standard_deviation_value*standard_deviation_value)
+    kurtosis_value=temp/len(first_list)
+    return round(kurtosis_value,3)
