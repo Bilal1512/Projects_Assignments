@@ -1,46 +1,35 @@
-# # All decimal 3 places
-# a=3.4
-# a="{0:.3f}".format(a)
-# print(a)
-# Function to compute mean
+# All decimal 3 places
+
 import math
 
-def sum_of_list(first_list):
-    a=0
+def summation(first_list):
+    summation_value=0
     for i in range(len(first_list)):
-        a+=first_list[i]
-    return a
+        summation_value+=first_list[i]
+    return summation_value
 
-def mean(first_list):
-    if len(first_list) is 0:
-        return 0
-    mean_value = sum_of_list(first_list)/len(first_list)
-    return round(mean_value,3)
+# # Function to compute mean
+# def mean(first_list):
+#     # mean Logic 
+#     return mean_value
 
-def sort_list(first_list):
-    for i in range(len(first_list)):
-        for j in range(i,len(first_list)):
-            if(first_list[j]<first_list[i]):
-                first_list[i],first_list[j]=first_list[j],first_list[i]
-    return first_list
+# def sorting(first_list):
+#     # Sorting Logic
+#     return sorted_list
 
-# Function to compute median. You cant use Python functions
-def median(first_list):
-    if len(first_list) is 0:
-        return 0
-    first_list=sort_list(first_list)
-    if len(first_list)%2 is 1:
-        median_value=first_list[int(len(first_list)/2)]
-    else:
-        median_value=(first_list[int(len(first_list)/2)-1]+first_list[int(len(first_list)/2)])/2
-    return round(median_value,3)
+# # Function to compute median. You cant use Python functions
+# def median(first_list):
+#     # median Logic
+#     return median_value
 
+# # Function to compute mse. You cant use Python functions
+# def mse(first_list, second_list):
+#     # mse Logic
+#     return mse_value
 
-
-
-# Function to compute Standard deviation. You cant use Python functions
+# # Function to compute Standard deviation. You cant use Python functions
 # def standard_deviation(first_list):
-    
+#     # Standard deviation Logic
 #     return standard_deviation_value
 
 
@@ -55,11 +44,6 @@ def median(first_list):
 #     # RMSE Logic
 #     return rmse_value
 
-
-# # Function to compute mse. You cant use Python functions
-# def mse(first_list, second_list):
-#     # mse Logic
-#     return mse_value
 
 
 # # Function to compute mae. You cant use Python functions
@@ -85,9 +69,6 @@ def median(first_list):
 #     # Skewness Logic
 #     return skewness_value
     
-# def sorting(first_list):
-#     # Sorting Logic
-#     return sorted_list
 
 
 # # Function to compute Kurtosis. You cant use Python functions
@@ -95,8 +76,3 @@ def median(first_list):
 #     # Kurtosis Logic
 #     return kurtosis_value
 
-
-# # Function to compute sum. You cant use Python functions
-# def summation(first_list):
-#     # sum Logic
-#     return summation_value
