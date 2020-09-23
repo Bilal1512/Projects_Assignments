@@ -1,31 +1,16 @@
 # All decimal 3 places
 
-import math
-
-def summation(first_list):
-    summation_value=0
-    for i in range(len(first_list)):
-        summation_value+=first_list[i]
-    return summation_value
-
 # # Function to compute mean
 # def mean(first_list):
 #     # mean Logic 
 #     return mean_value
 
-# def sorting(first_list):
-#     # Sorting Logic
-#     return sorted_list
 
 # # Function to compute median. You cant use Python functions
 # def median(first_list):
 #     # median Logic
 #     return median_value
 
-# # Function to compute mse. You cant use Python functions
-# def mse(first_list, second_list):
-#     # mse Logic
-#     return mse_value
 
 # # Function to compute Standard deviation. You cant use Python functions
 # def standard_deviation(first_list):
@@ -44,6 +29,11 @@ def summation(first_list):
 #     # RMSE Logic
 #     return rmse_value
 
+
+# # Function to compute mse. You cant use Python functions
+# def mse(first_list, second_list):
+#     # mse Logic
+#     return mse_value
 
 
 # # Function to compute mae. You cant use Python functions
@@ -69,6 +59,9 @@ def summation(first_list):
 #     # Skewness Logic
 #     return skewness_value
     
+# def sorting(first_list):
+#     # Sorting Logic
+#     return sorted_list
 
 
 # # Function to compute Kurtosis. You cant use Python functions
@@ -76,3 +69,8 @@ def summation(first_list):
 #     # Kurtosis Logic
 #     return kurtosis_value
 
+
+# # Function to compute sum. You cant use Python functions
+# def summation(first_list):
+#     # sum Logic
+#     return summation_value
