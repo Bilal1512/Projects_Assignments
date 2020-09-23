@@ -1,5 +1,6 @@
 # All decimal 3 places
 # Function to compute sum. You cant use Python functions
+import math
 def summation(first_list):
     summation_value=0.0
     for i in range(len(first_list)):
@@ -40,6 +41,13 @@ def mse(first_list, second_list):
     mse_value=temp/len(first_list)
     return round(mse_value,3)
 
+
+# Function to compute RMSE. You cant use Python functions
+def rmse(first_list, second_list):
+    rmse_value= math.sqrt(mse(first_list,second_list))
+    return round(rmse_value,3)
+
+
 # # Function to compute Standard deviation. You cant use Python functions
 # def standard_deviation(first_list):
 #     # Standard deviation Logic
@@ -51,11 +59,6 @@ def mse(first_list, second_list):
 #     # variance Logic
 #     return variance_value
 
-
-# # Function to compute RMSE. You cant use Python functions
-# def rmse(first_list, second_list):
-#     # RMSE Logic
-#     return rmse_value
 
 
 # # Function to compute mae. You cant use Python functions
