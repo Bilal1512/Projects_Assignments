@@ -63,6 +63,24 @@ def nse(first_list, second_list):
     return round(nse_value,3)
 
 
+# Function to compute Pearson correlation coefficient. You cant use Python functions
+def pcc(first_list, second_list):
+    if len(first_list) is 0 or len(first_list)!=len(second_list):
+        return 0
+    mean_value_x=mean(first_list)
+    mean_value_y=mean(second_list)
+    temp1=0.0
+    temp2=0.0
+    temp3=0.0
+    for i in range(len(first_list)):
+        temp1+=(first_list[i]-mean_value_x)*(second_list[i]-mean_value_y)
+        temp2+=(first_list[i]-mean_value_x)*(first_list[i]-mean_value_x)
+        temp3+=(second_list[i]-mean_value_y)*(second_list[i]-mean_value_y)
+    if temp2 is 0 or temp3 is 0:
+        return 0
+    pcc_value=temp1/(math.sqrt(temp2)*math.sqrt(temp3))
+    return round(pcc_value,3)
+
 
 # # Function to compute Standard deviation. You cant use Python functions
 # def standard_deviation(first_list):
@@ -82,12 +100,6 @@ def nse(first_list, second_list):
 #     # mae Logic
 #     return mae_value
 
-
-
-# # Function to compute Pearson correlation coefficient. You cant use Python functions
-# def pcc(first_list, second_list):
-#     # nse Logic
-#     return pcc_value
 
 
 # # Function to compute Skewness. You cant use Python functions
