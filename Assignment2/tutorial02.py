@@ -48,6 +48,22 @@ def rmse(first_list, second_list):
     return round(rmse_value,3)
 
 
+# # Function to compute NSE. You cant use Python functions
+def nse(first_list, second_list):
+    if len(first_list) is 0 or len(first_list)!=len(second_list):
+        return 0
+    mean_value=mean(first_list)
+    temp1=mse(first_list, second_list)*len(first_list)
+    temp2=0.0
+    for i in range(len(first_list)):
+        temp2+=(first_list[i]-mean_value)*(first_list[i]-mean_value)
+    if temp2 is 0:
+        return 0
+    nse_value=1-(temp1/temp2)
+    return round(nse_value,3)
+
+
+
 # # Function to compute Standard deviation. You cant use Python functions
 # def standard_deviation(first_list):
 #     # Standard deviation Logic
@@ -66,11 +82,6 @@ def rmse(first_list, second_list):
 #     # mae Logic
 #     return mae_value
 
-
-# # Function to compute NSE. You cant use Python functions
-# def nse(first_list, second_list):
-#     # nse Logic
-#     return nse_value
 
 
 # # Function to compute Pearson correlation coefficient. You cant use Python functions
