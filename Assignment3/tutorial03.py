@@ -179,3 +179,27 @@ def state():
                         writer=csv.writer(fill)
                         writer.writerow(i)
     pass
+
+
+
+
+def blood_group():
+    with open('./studentinfo_cs384.csv','r') as file:
+        reader=csv.reader(file)
+        for i in reader:
+            if i[0]=='id':
+                continue
+            bloodgroup=i[6]
+            bloodgroup=bloodgroup.lower()
+            path=os.getcwd()+'\\'+'analytics'+'\\'+'blood_group'
+            if not os.path.exists(path):
+                os.makedirs(path)
+            path+='\\'+bloodgroup+'.csv'
+            if not os.path.exists(path):
+                    with open(path, 'a',newline='') as fill:
+                        writer=csv.writer(fill)
+                        writer.writerow(['id','full_name','country','email','gender','dob','blood_group','state'])
+            with open(path, 'a',newline='') as fill:
+                        writer=csv.writer(fill)
+                        writer.writerow(i)
+    pass
