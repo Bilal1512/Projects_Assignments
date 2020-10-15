@@ -203,3 +203,43 @@ def blood_group():
                         writer=csv.writer(fill)
                         writer.writerow(i)
     pass
+
+
+def new_file_sort():
+    with open('./studentinfo_cs384.csv','r') as file:
+        reader=csv.reader(file)
+        for i in reader:
+            if i[0]=='id':
+                continue
+            name=i[1]
+            for j in range(len(name)):
+                if name[j]==' ':
+                    break;
+            first_name=name[:j]
+            last_name=name[j+1:]
+            path=os.getcwd()+'\\'+'analytics'
+            if not os.path.exists(path):
+                os.makedirs(path)
+            path+='\\'+'studentinfo_cs384_names_split'+'.csv'
+            if not os.path.exists(path):
+                    with open(path, 'a',newline='') as fill:
+                        writer=csv.writer(fill)
+                        writer.writerow(['id','first_name','last_name','country','email','gender','dob','blood_group','state'])
+            with open(path, 'a',newline='') as fill:
+                        writer=csv.writer(fill)
+                        writer.writerow([i[0],first_name,last_name,i[2],i[3],i[4],i[5],i[6],i[7]])
+    with open (os.getcwd()+'\\'+'analytics'+ '\\' + 'studentinfo_cs384_names_split.csv', 'r') as file:
+        reader = csv.reader(file)
+        stud_list = []
+        for i in reader:
+            if not os.path.exists(os.getcwd()+'\\'+'analytics'+ '\\' + 'studentinfo_cs384_names_split_sorted_first_name.csv') or i[0]=='id':
+                with open(os.getcwd()+'\\'+'analytics'+ '\\' + 'studentinfo_cs384_names_split_sorted_first_name.csv', 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(i)
+            stud_list.append([i[1],i[2],i[0],i[3],i[4],i[5],i[6],i[7],i[8]])
+        stud_list.sort()
+        for student in stud_list:
+            with open(os.getcwd()+'\\'+'analytics' + '\\' + 'studentinfo_cs384_names_split_sorted_first_name.csv', 'a',newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow([student[2],student[0],student[1],student[3],student[4],student[5],student[6],student[7],student[8]])
+    pass
