@@ -74,3 +74,33 @@ def country():
                         writer=csv.writer(fill)
                         writer.writerow(i)
     pass
+
+
+def email_domain_extract():
+    with open('./studentinfo_cs384.csv','r') as file:
+        reader=csv.reader(file)
+        for i in reader:
+            if i[0]=='id':
+                continue
+            email=i[3]
+            domain=""
+            start=0
+            for j in email:
+                if j=='.' and start==1:
+                    break
+                elif j=='@':
+                    start=1;
+                elif start==1:
+                    domain+=j
+            path=os.getcwd()+'\\'+'analytics'+'\\'+'domain'
+            if not os.path.exists(path):
+                os.makedirs(path)
+            path+='\\'+domain+'.csv'
+            if not os.path.exists(path):
+                    with open(path, 'a',newline='') as fill:
+                        writer=csv.writer(fill)
+                        writer.writerow(['id','full_name','country','email','gender','dob','blood_group','state'])
+            with open(path, 'a',newline='') as fill:
+                        writer=csv.writer(fill)
+                        writer.writerow(i)
+    pass
