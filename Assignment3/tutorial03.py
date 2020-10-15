@@ -126,3 +126,33 @@ def gender():
                         writer=csv.writer(fill)
                         writer.writerow(i)
     pass
+
+
+def dob():
+    with open('./studentinfo_cs384.csv','r') as file:
+        reader=csv.reader(file)
+        for i in reader:
+            if i[0]=='id':
+                continue
+            bday=i[5]
+            year=bday[-4:]
+            year=int(year)
+            if not 1995<=year<=2020 :
+                if not os.path.exists(os.getcwd()+'\\'+'analytics'+'\\'+'dob'):
+                    os.makedirs(os.getcwd()+'\\'+'analytics'+'\\'+'dob')
+                with open(os.getcwd() + '\\' +'analytics'+'\\'+'dob'+'\\'+'misc'+'.csv', 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(i)
+            else:
+                temp=int(year/5)
+                start=temp*5
+                end=(temp*5)+4
+                if start==2020 or start==2015:
+                    start=2015
+                    end=2020
+                if not os.path.exists(os.getcwd()+'\\'+'analytics'+'\\'+'dob'):
+                    os.makedirs(os.getcwd()+'\\'+'analytics'+'\\'+'dob')
+                with open(os.getcwd() + '\\' +'analytics'+'\\'+'dob'+'\\'+'bday'+'_'+str(start)+'_'+str(end)+'.csv', 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(i)
+    pass
