@@ -156,3 +156,26 @@ def dob():
                     writer = csv.writer(file)
                     writer.writerow(i)
     pass
+
+
+
+def state():
+    with open('./studentinfo_cs384.csv','r') as file:
+        reader=csv.reader(file)
+        for i in reader:
+            if i[0]=='id':
+                continue
+            state=i[7]
+            state=state.lower()
+            path=os.getcwd()+'\\'+'analytics'+'\\'+'state'
+            if not os.path.exists(path):
+                os.makedirs(path)
+            path+='\\'+state+'.csv'
+            if not os.path.exists(path):
+                    with open(path, 'a',newline='') as fill:
+                        writer=csv.writer(fill)
+                        writer.writerow(['id','full_name','country','email','gender','dob','blood_group','state'])
+            with open(path, 'a',newline='') as fill:
+                        writer=csv.writer(fill)
+                        writer.writerow(i)
+    pass
