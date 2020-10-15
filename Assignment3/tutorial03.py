@@ -13,3 +13,8 @@ def valid_roll(roll_number):
         if not 48<=ord(roll_number[i])<=57:
             return False
     return True
+
+def del_create_analytics_folder():
+    path=os.getcwd()+'\\'+'analytics'
+    if os.path.exists(path):
+        shutil.rmtree(path)
