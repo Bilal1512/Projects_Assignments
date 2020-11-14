@@ -28,3 +28,21 @@ with open('./acad_res_stud_grades.csv','r') as file:
                 with open(os.getcwd()+'\\'+'grades'+'\\'+'misc.csv','a',newline='') as mwrite:
                     writer=csv.writer(mwrite)
                     writer.writerow([row[4],row[5],row[8],row[6],row[2]])
+
+def creating_overall_file(total_sem,credits_per_sem,obtained_weightage_per_sem,credits_not_cleared_per_sem,curr_student):
+    with open(os.getcwd()+'\\'+'grades'+'\\'+curr_student+'_'+'overall.csv','a',newline='') as append:
+                    writer=csv.writer(append)
+                    writer.writerow(['Roll: '+curr_student])
+                    writer.writerow(['Semester','Semester Credits','Semester Credits Cleared','SPI','Total Credits','Total Credits Cleared','CPI'])
+                    total_credits=0
+                    total_cleared_credits=0
+                    cpi=0
+                    for sem in range(1,total_sem+1):
+                        if credits_per_sem[sem-1]!=0:
+                            spi=obtained_weightage_per_sem[sem-1]/credits_per_sem[sem-1]
+                        if total_credits+credits_per_sem[sem-1]!=0:
+                            cpi=((cpi*total_credits)+(spi*credits_per_sem[sem-1]))/(total_credits+credits_per_sem[sem-1])
+                        total_credits+=credits_per_sem[sem-1]
+                        total_cleared_credits+=(credits_per_sem[sem-1]-credits_not_cleared_per_sem[sem-1])
+                        if credits_per_sem[sem-1]!=0:
+                            writer.writerow([sem,credits_per_sem[sem-1],credits_per_sem[sem-1],round(spi,2),total_credits,total_cleared_credits,round(cpi,2)])
