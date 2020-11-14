@@ -46,3 +46,46 @@ def creating_overall_file(total_sem,credits_per_sem,obtained_weightage_per_sem,c
                         total_cleared_credits+=(credits_per_sem[sem-1]-credits_not_cleared_per_sem[sem-1])
                         if credits_per_sem[sem-1]!=0:
                             writer.writerow([sem,credits_per_sem[sem-1],credits_per_sem[sem-1],round(spi,2),total_credits,total_cleared_credits,round(cpi,2)])
+
+with open('acad_res_stud_grades.csv','r') as file:
+    reader= csv.reader(file)
+    curr_student=''
+    credits_per_sem=[0]*10
+    obtained_weightage_per_sem=[0]*10 #summation of credits*grade
+    credits_not_cleared_per_sem=[0]*10
+    total_sem=0 
+    for row in reader:
+        if row[1] in not_valid or row[0]=='sl':
+            continue
+        if row[1]==curr_student:
+            credits_per_sem[int(row[2])-1]+=int(row[5])
+            obtained_weightage_per_sem[int(row[2])-1]+=numeric_grade[row[6]]*int(row[5])
+            if numeric_grade[row[6]]==0:
+                credits_not_cleared_per_sem[int(row[2])-1]+=int(row[5])
+            total_sem=max(total_sem,int(row[2]))
+            path=os.getcwd()+'\\'+'grades'
+            with open(path+'\\'+curr_student+'_'+'individual.csv','a',newline='') as append:
+                writer=csv.writer(append)
+                writer.writerow([row[4],row[5],row[8],row[6],row[2]])
+        else:
+            if not curr_student=='':
+                creating_overall_file(total_sem,credits_per_sem,obtained_weightage_per_sem,credits_not_cleared_per_sem,curr_student)
+            #for new student set them to default
+            curr_student=row[1]
+            total_sem=0 
+            credits_per_sem=[0]*10
+            obtained_weightage_per_sem=[0]*10 #summation of (credits*grade)
+            credits_not_cleared_per_sem=[0]*10 
+            credits_per_sem[int(row[2])-1]+=int(row[5])
+            obtained_weightage_per_sem[int(row[2])-1]+=numeric_grade[row[6]]*int(row[5])
+            if numeric_grade[row[6]]==0:
+                credits_not_cleared_per_sem[int(row[2])-1]+=int(row[5])
+            total_sem=max(total_sem,int(row[2]))
+            path=os.getcwd()+'\\'+'grades'
+            with open(path+'\\'+curr_student+'_'+'individual.csv','a',newline='') as append:
+                writer=csv.writer(append)
+                writer.writerow(['Roll: '+curr_student])
+                writer.writerow(['Semester wise details'])
+                writer.writerow(['Subject','Credits','Type','Grade','Sem'])
+                writer.writerow([row[4],row[5],row[8],row[6],row[2]])
+    creating_overall_file(total_sem,credits_per_sem,obtained_weightage_per_sem,credits_not_cleared_per_sem,curr_student)
