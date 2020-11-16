@@ -57,3 +57,27 @@ def rename_How_I_Met_Your_Mother(folder_name):
 			os.rename(filename,'How I Met Your Mother - Season '+ season_number + ' Episode ' + episode_number + ' - ' + name + '.' + extension) 
 		except:
 			os.remove(filename)
+
+def rename_Sherlock(folder_name):
+    	# rename Logic  
+	path = 'Subtitles'+'\\'+folder_name
+	for filename in os.listdir(path):
+		try:
+			info = filename.split('.')
+			lis=re.findall(r'\d+',info[1])
+			if len(lis) is 1:               			
+			    season_number=lis[0]
+			    episode_number=re.findall(r'\d+',info[2])[0]
+			else:
+				season_number=lis[0]
+				episode_number=lis[1]
+			extension = (re.split(r'\.',filename)[-1]).strip()
+			if(len(season_number) < int(season_number_padding)):
+				season_number = '0'*(int(season_number_padding)-len(season_number)) + season_number
+			if(len(episode_number) < int(episode_number_padding)):
+				episode_number = '0'*(int(episode_number_padding)-len(episode_number)) + episode_number
+			path=os.path.join(os.getcwd(),path)      
+			os.chdir(path)
+			os.rename(filename,'Sherlock - Season '+ season_number +' Episode ' + episode_number + '.' + extension)  
+		except:
+			os.remove(filename) 			
