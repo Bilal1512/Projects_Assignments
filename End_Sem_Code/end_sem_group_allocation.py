@@ -63,12 +63,13 @@ def group_allocation(filename, number_of_groups):
             students_branchwise=csv.reader(rfile)
             curr_group=1
             count=0
-            for student in students_branchwise:
-                if student[0]=='Roll':
-                    continue
+            header = next(students_branchwise)
+            for z in range(branch_strength[branch]):
                 if count==count_matrix[branch][curr_group-1]:
                     count=0
                     curr_group=curr_group+1
+                if count_matrix[branch][curr_group-1] == 0:
+                    continue
                 str_group=str(curr_group)
                 if len(str_group)==1:
                     str_group='0'+str_group
@@ -78,7 +79,7 @@ def group_allocation(filename, number_of_groups):
                         writer.writerow(['Roll','Name','Email'])
                 with open(os.getcwd()+'\\'+'Groups'+'\\'+'Group_G'+str_group+'.csv','a',newline='') as mwrite:
                     writer=csv.writer(mwrite)
-                    writer.writerow(student)
+                    writer.writerow(next(students_branchwise))
                 count+=1
     #task4
     with open(os.getcwd()+'\\'+'Groups'+'\\'+'stats_grouping.csv','a',newline='') as mwrite:
