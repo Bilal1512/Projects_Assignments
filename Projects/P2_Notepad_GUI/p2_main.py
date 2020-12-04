@@ -249,5 +249,9 @@ if __name__ == '__main__':
     # Stats Menu Ends
 
     root.config(menu=MenuBar) # This sets MEnuBar as menu in our GUI
-    
+    # Adding Scrollbar
+    Scroll = Scrollbar(TextArea)
+    Scroll.pack(side=RIGHT,  fill=Y)
+    Scroll.config(command=TextArea.yview)
+    TextArea.config(yscrollcommand=Scroll.set)
     root.mainloop() # Event Loop / Main Loop(Keeps us in GUI Window and implements GUI Logic)
