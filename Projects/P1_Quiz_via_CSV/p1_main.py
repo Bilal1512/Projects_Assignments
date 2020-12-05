@@ -5,8 +5,13 @@ import time
 import sys
 import threading
 import keyboard
+import re
 from threading import *
 
+if not os.path.exists(os.getcwd()+"\\quiz_wise_responses"):
+    os.mkdir("quiz_wise_responses")
+if not os.path.exists(os.getcwd()+"\\individual_responses"):
+    os.mkdir("individual_responses")
 
 responses = {1:"q1",
             2:"q2",
@@ -38,15 +43,21 @@ total_marks INT NOT NULL);
 
 conn.commit()
 
-
+temp = 0
 def countdown(): 
     global t
+    global temp
     while t: 
         mins, secs = divmod(t, 60) 
         timer = '{:02d}:{:02d}'.format(mins, secs) 
         print(timer, end="\r") 
         time.sleep(1) 
         t -= 1
+        if temp == 1:
+            t = 0
+            print('\nYour responses have been saved')
+            temp = 0
+            return
       
     print('\nTime Up!! Your responses have been saved \nEnter any valid key to exit')
 def register():
@@ -57,7 +68,7 @@ def register():
         find_user=("SELECT * FROM Project1_registration WHERE roll_number=?")
         c.execute(find_user,[(roll_number)])
         if c.fetchall():
-            print("Your account is already exists please log in")
+            print("Your account already exists please log in")
             return
         else:
             found=1
@@ -83,9 +94,19 @@ def login():
                   return
         else:
             print("username or password incorrect,try again")
-            
+unattempted = []           
 def quiz(info):
     global t
+    global question_list
+    global unattempted
+    global response
+    global total_marks_obtained
+    global total_marks
+    global unattempted_num
+    global correct_questions
+    global wrong_choices
+    global total_questions
+    global attempted_questions
     print('\n'*4+'*'*25+'WELCOME'+'*'*25)
     quiz_num=input("please choose a quiz which you want to attempt(Please enter quiz number) \n1.Quiz1\n2.Quiz2\n3.Quiz3\n")
     path=os.getcwd()+'\\'+'quiz_wise_questions'
@@ -99,57 +120,67 @@ def quiz(info):
             if row[0] == 'ques_no':
                 temp = row[10]
                 t = temp[5:-1]
+    qfile = open(filename, 'r')
+    freader = csv.DictReader(qfile)
     os.chdir(curpath)
-    t = int(t)
-    t1 = Thread(target = countdown)
-    t1.start()
+    t = 120
     response=[]
     correct_questions=0
+    total_marks = 0
     attempted_questions=0
     total_marks_obtained=0
+    total_questions = 0
+    unattempted_num = 10
     wrong_choices=0
     unattempted=[1,2,3,4,5,6,7,8,9,10]
+    question_list = []
+    t1 = threading.Thread(target = countdown)
+    t1.start()
+    for row in freader:
+        question_list.append(row)
+        total_questions += 1
+        
     print('\n'*4+'*'*25+'QUIZ STARTS'+'*'*25)
-    with open(path+'\\'+'q'+quiz_num+'.csv','r') as file:
-        questions=csv.reader(file)
-        for question in questions:
-            if t == 0:
+    
+    for row in question_list:
+        if t == 0:
+            break
+        print("Timer: "+str(t)+'\n'+"Roll Number: "+info[1]+'\n'+"Name: "+info[0]+'\n')
+        print("Press Ctrl+Alt+U to see the unattempted questions")
+        print("Question"+row['ques_no']+": "+row['question'])
+        print("Option "+'1'+") "+row['option1'])
+        print("Option "+'2'+") "+row['option2'])
+        print("Option "+'3'+") "+row['option3'])
+        print("Option "+'4'+") "+row['option4'])
+        print("\n")
+        print("Credits if correct option: "+row['marks_correct_ans'])
+        print("Negative Marking: "+row['marks_wrong_ans'])
+        print("Is compulsory: "+row['compulsory'])
+        valid_response=['1','2','3','4','S','s']
+        while True:
+            choice=input("\nEnter Choice 1, 2, 3, 4, S(S is to skip question): \n")
+            if choice in valid_response:
                 break
-            if question[0]=='ques_no':
-                continue
-            print("Question"+question[0]+": "+question[1])
-            print("Option "+'1'+") "+question[2])
-            print("Option "+'2'+") "+question[3])
-            print("Option "+'3'+") "+question[4])
-            print("Option "+'4'+") "+question[5])
-            print("Credits if correct option: "+question[7])
-            print("Negative Marking: "+question[8])
-            print("Is compulsory: "+question[9])
-            print("Timer: "+str(t)+'\n'+"Roll Number: "+info[1]+'\n'+"Name: "+info[0]+'\n')
-            valid_response=['1','2','3','4','S','s']
-            while True:
-                choice=input("\nEnter Choice 1, 2, 3, 4, S(S is to skip question): \n")
-                if choice in valid_response:
-                    break
-                else:
-                    print("please enter valid choice")
-            if t == 0:
-                break
-            #keyboard.add_hotkey("ctrl+alt+U", lambda : print("Unattempted Questions are:",unattempted))
-            response.append(choice)
-            if choice.lower()=='s':
-                if question[9].lower()=='y':
-                    total_marks_obtained+=int(question[8])
             else:
-                unattempted.remove(int(question[0]))
-                attempted_questions+=1
-                if question[6]==choice:
-                    correct_questions+=1
-                    total_marks_obtained+=int(question[7])
-                else:
-                    wrong_choices+=1
-                    total_marks_obtained+=int(question[8])
-            print('\n'*2)
+                print("please enter valid choice")
+        if t == 0:
+            break
+        #keyboard.add_hotkey("ctrl+alt+U", lambda : print("Unattempted Questions are:",unattempted))
+        response.append(choice)
+        if choice.lower()=='s':
+            if row['compulsory'].lower()=='y':
+                total_marks_obtained+=int(row['marks_wrong_ans'])
+        else:
+            unattempted.remove(int(row['ques_no']))
+            attempted_questions+=1
+            if row['correct_option']==choice:
+                correct_questions+=1
+                total_marks_obtained+=int(row['marks_correct_ans'])
+            else:
+                wrong_choices+=1
+                total_marks_obtained+=int(row['marks_wrong_ans'])
+        print('\n'*2)
+    
     total_marks=0
     with open(path+'\\'+'q'+quiz_num+'.csv','r') as file:
         questions=csv.reader(file)
@@ -189,6 +220,11 @@ Total Correct Question:{}
 Total Wrong Questions:{}
 Total Marks: {}/{}'''.format(total_quiz_questions,attempted_questions,correct_questions,wrong_choices,total_marks_obtained,total_marks))
     
+    print("Press Ctrl+Alt+U to see the unattempted questions")
+    print("Press Ctrl+Alt+G to go to your desired question")
+    print("Press Ctrl+Alt+F to submit the quiz finally")
+    print("Press Ctrl+Alt+E to export the database to csv")
+    t1.join()
     quiz_num=int(quiz_num)
     find_user=("SELECT * FROM Project1_marks WHERE roll_num=? AND quiz_num=?")
     c.execute(find_user,[(info[1]),(quiz_num)])
@@ -199,16 +235,71 @@ Total Marks: {}/{}'''.format(total_quiz_questions,attempted_questions,correct_qu
     VALUES(?,?,?)'''
     c.execute(insertData,[(info[1]),(quiz_num),(total_marks_obtained)])
     conn.commit()
-
+def gotoQuestion():
+    quesNum = int(input("Enter the question number you want to go to: "))
+    row = question_list[quesNum-1]
+    print("Question "+row['ques_no']+") "+row['question'])
+    print("Option 1) "+row['option1'])
+    print("Option 2) "+row['option2'])
+    print("Option 3) "+row['option3'])
+    print("Option 4) "+row['option4'])
+    print("\n")
+    print("Credits if Correct Option: "+row['marks_correct_ans'])
+    print("Negative Marking: "+row['marks_wrong_ans'])
+    
+    if row['compulsory'].lower() == 'y':
+        print("Is compulsory: YES")
+    else:
+        print("Is compulsory: NO")
+    
+    if len(response) >= quesNum:
+        print("Your marked choice is:",response[quesNum-1])
+    else:
+        print("You have not attempted this question yet")
+    print("\n")
+def showUnattempted():
+    global unattempted
+    print("\nUnattempted questions are:",unattempted,"\n")
+def final_submit():
+    global temp
+    x=input('Are you sure you want to submit?(Y/N)')
+    if x.lower()=='y':
+        temp=1
+def exportdb():
+    conn=sqlite3.connect("Project1_Quiz_cs384.db")
+    entries = conn.execute("SELECT * FROM Project1_marks")
+    for entry in entries:
+        quiz_num = entry[1]
+        rollNo = entry[0]
+        marks = entry[2]
+        if not os.path.exists(os.getcwd()+"\\quiz_wise_responses\\"+"scores_q"+str(quiz_num)+".csv"):
+            qfile = open(os.getcwd()+"\\quiz_wise_responses\\"+"scores_q"+str(quiz_num)+".csv","a",newline='')
+            fwriter = csv.DictWriter(qfile, ["roll_number","total_marks"])
+            fwriter.writeheader()
+            fwriter.writerow({"roll_number":rollNo,"total_marks":marks})
+        else:
+            qfile = open(os.getcwd()+"\\quiz_wise_responses\\"+"scores_q"+str(quiz_num)+".csv","a",newline='')
+            fwriter = csv.DictWriter(qfile, ["roll_number","total_marks"])
+            fwriter.writerow({"roll_number":rollNo,"total_marks":marks})
 def multi_quiz(info):
     while True:
         quiz(info)
         res=input("would you like to attempt one more quiz:(Y/N) ")
-        if res.lower()=='n':
+        if res.lower()!='y':
             break
-
+    return
+keyboard.add_hotkey("Ctrl+Alt+G", gotoQuestion)
+keyboard.add_hotkey("Ctrl+Alt+U", showUnattempted)
+keyboard.add_hotkey("Ctrl+Alt+F", final_submit)
+keyboard.add_hotkey("Ctrl+Alt+E", exportdb)
 if __name__ == '__main__':
-    new=input("Do you have an account(y/n)  ")
-    if(new.lower()=='n'):
-        register()
+    while True:
+        new=input("Do you have an account(y/n)  ")
+        if(new.lower()=='n'):
+            register()
+            break
+        elif(new.lower()=='y'):
+            break
+        else:
+            print("/nplease enter a valid key")
     login()
