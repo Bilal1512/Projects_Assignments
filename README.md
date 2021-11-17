@@ -1,1 +1,3 @@
-# CS384_1801EE25
+1. Quiz Portal
+2. Codeforces tool
+3. Assignments
